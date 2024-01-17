@@ -28,5 +28,16 @@ public class BusinessUserServiceImpl implements BusinessUserService {
         businessUser.setPassword(md5String);
         businessUserMapper.insert(businessUser);
     }
+
+    @Override
+    public void registerBusiness(BusinessUser businessUser) {
+        businessUserMapper.updateById(businessUser);
+    }
+
+    @Override
+    public String selectStatusById(Long id) {
+        QueryWrapper<BusinessUser> qw = new QueryWrapper<>();
+        return businessUserMapper.selectOne(qw.eq("id",id)).getStatus();
+    }
 }
 

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/business")
@@ -51,5 +52,17 @@ public class BusinessUserController {
             return Result.success("登录成功", token);
         }
         return Result.error("密码错误");
+    }
+
+    @PostMapping("/update")
+    public Result<String> update(BusinessUser businessUser){
+        if(businessUser.getId() == null) return Result.error("商户id不能为空");
+
+        String status = businessUserService.selectStatusById(businessUser.getId());
+        if(!Objects.equals(status, "CHECKING")){
+            // status不等于CHECKING才调方法改状态
+            businessUserService.registerBusiness(businessUser);
+            return Result.success("信息提交成功，请等待管理员审核");
+        }else return Result.error("当前商户已提交审核，不能再修改");
     }
 }
