@@ -54,6 +54,7 @@ public class BusinessUserController {
         return Result.error("密码错误");
     }
 
+    // 注册成功后更新商家信息
     @PostMapping("/update")
     public Result<String> update(BusinessUser businessUser){
         if(businessUser.getId() == null) return Result.error("商户id不能为空");
@@ -64,5 +65,14 @@ public class BusinessUserController {
             businessUserService.registerBusiness(businessUser);
             return Result.success("信息提交成功，请等待管理员审核");
         }else return Result.error("当前商户已提交审核，不能再修改");
+    }
+
+    // 根据username查审核状态
+    @PostMapping("/search")
+    public Result<String> search(String username){
+        if(username == null) return Result.error("用户名不能为空");
+
+        BusinessUser businessUser = businessUserService.findByUserName(username);
+        return Result.success("成功",businessUser.getStatus());
     }
 }
