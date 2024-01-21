@@ -63,7 +63,8 @@ public class BusinessUserController {
         if(!Objects.equals(status, "CHECKING")){
             // status不等于CHECKING才调方法改状态
             businessUserService.registerBusiness(businessUser);
-            return Result.success("信息提交成功，请等待管理员审核");
+            if(status.equals("PASS")) return Result.success("更新成功");
+            else return Result.success("信息提交成功，请等待管理员审核");
         }else return Result.error("当前商户已提交审核，不能再修改");
     }
 

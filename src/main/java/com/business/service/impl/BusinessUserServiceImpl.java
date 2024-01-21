@@ -26,6 +26,7 @@ public class BusinessUserServiceImpl implements BusinessUserService {
         BusinessUser businessUser = new BusinessUser();
         businessUser.setUsername(username);
         businessUser.setPassword(md5String);
+        businessUser.setStatus("UNCOMMITTED");
         businessUserMapper.insert(businessUser);
     }
 
