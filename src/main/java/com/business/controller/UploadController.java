@@ -14,7 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class UploadController {
 
     @Autowired
-    UploadService uploadService;
+    private UploadService uploadService;
 
     @PostMapping("/upload")
     public Result<String> upload(@RequestParam("file") MultipartFile file) throws Exception {
